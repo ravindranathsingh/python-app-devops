@@ -1,0 +1,18 @@
+# Vagrant
+.vagrant
+*.box
+
+# Virtual environments (local runtime toolchains)
+venv/
+.venv/
+env/
+ENV/
+
+# Python compiled bytecode cache layers
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.poetry/
+

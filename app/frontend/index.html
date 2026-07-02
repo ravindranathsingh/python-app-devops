@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Deployment Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>DevOps Deployment Portal</h1>
+            <p>Architecture: De-coupled Frontend + Flask API API + PostgreSQL Database</p>
+        </header>
+
+        <!-- System Status Component -->
+        <section class="status-card">
+            <h3>Infrastructure Health Status</h3>
+            <div id="connectionStatus" class="badge loading">Checking API Engine...</div>
+        </section>
+
+        <!-- Database Operations Form -->
+        <section class="form-card">
+            <h3>Log Deployment Event</h3>
+            <form id="deploymentForm">
+                <input type="text" id="serviceName" placeholder="Service Name (e.g., auth-api)" required>
+                <input type="text" id="environment" placeholder="Environment (e.g., staging)" required>
+                <button type="submit">Submit Entry to Database</button>
+            </form>
+        </section>
+
+        <!-- Dynamic Data Component -->
+        <section class="logs-card">
+            <h3>Recent Deployment Logs (Live DB Fetch)</h3>
+            <ul id="logList">
+                <li class="empty">No entries found.</li>
+            </ul>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
