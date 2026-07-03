@@ -1,4 +1,3 @@
-// FIXED: Removed trailing route suffix to prevent broken endpoints
 const API_URL = "http://192.168.56.10:5000/api";
 
 document.addEventListener('DOMContentLoaded', () => {
