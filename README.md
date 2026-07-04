@@ -71,3 +71,59 @@ Features:
 - Non-root application user
 - Environment variable configuration
 - Optimized image size
+
+## Ansible
+
+Ansible is used as the configuration management tool to provision and configure the Kubernetes cluster.
+
+Control Node:
+- Master VM (192.168.56.10)
+
+Managed Nodes:
+- Master VM
+- Worker VM
+
+## Container Network Interface (CNI)
+
+Flannel is used as the Kubernetes CNI to provide networking between Pods across cluster nodes.
+
+## Database
+
+PostgreSQL is deployed as a Kubernetes Deployment with a PersistentVolumeClaim for persistent storage.
+
+## Kubernetes Namespace
+
+All application resources are deployed into a dedicated namespace named `devops-app` for logical isolation.
+
+## PostgreSQL Secret
+
+Database credentials are stored in a Kubernetes Secret and injected into the PostgreSQL container as environment variables.
+
+## Persistent Storage
+
+A PersistentVolumeClaim is used to persist PostgreSQL data across Pod restarts and recreations.
+
+## PostgreSQL Deployment
+
+PostgreSQL runs as a single-replica Deployment and stores its data on a PersistentVolumeClaim.
+
+kubectl get pods -n python-app
+
+kubectl get pvc -n python-app
+
+## Backend Deployment
+
+The Flask backend is deployed as a Kubernetes Deployment and connects to PostgreSQL through the internal Kubernetes Service.
+
+## Backend Service
+
+The Flask backend is exposed internally using a ClusterIP Service. Other applications inside the cluster communicate with it using the DNS name `backend`.
+
+## Frontend Deployment
+
+The frontend is deployed as a Kubernetes Deployment running NGINX to serve the static web application. It communicates with the backend through the Kubernetes Ingress.
+
+## Frontend Service
+
+The frontend is exposed internally using a ClusterIP Service. External users access it through the NGINX Ingress Controller.
+
