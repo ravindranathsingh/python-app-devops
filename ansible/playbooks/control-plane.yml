@@ -1,0 +1,40 @@
+---
+- name: Initialize Kubernetes Control Plane
+  hosts: kube_control_plane
+  become: true
+
+  tasks:
+
+    - name: Initialize Kubernetes cluster
+      ansible.builtin.command: >
+        kubeadm init
+        --apiserver-advertise-address={{ control_plane_endpoint }}
+        --pod-network-cidr={{ pod_network_cidr }}
+        --cri-socket={{ cri_socket }}
+      args:
+        creates: /etc/kubernetes/admin.conf
+
+    - name: Create .kube directory
+      ansible.builtin.file:
+        path: /home/vagrant/.kube
+        state: directory
+        owner: vagrant
+        group: vagrant
+        mode: "0755"
+
+    - name: Copy admin.conf
+      ansible.builtin.copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/vagrant/.kube/config
+        remote_src: true
+        owner: vagrant
+        group: vagrant
+        mode: "0644"
+
+    - name: Generate join command
+      ansible.builtin.command: kubeadm token create --print-join-command
+      register: join_command
+
+    - name: Save join command
+      ansible.builtin.set_fact:
+        kubeadm_join: "{{ join_command.stdout }}"
