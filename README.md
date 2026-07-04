@@ -127,3 +127,13 @@ The frontend is deployed as a Kubernetes Deployment running NGINX to serve the s
 
 The frontend is exposed internally using a ClusterIP Service. External users access it through the NGINX Ingress Controller.
 
+## NGINX Ingress Controller
+
+NGINX Ingress Controller provides a single external entry point into the Kubernetes cluster. It routes incoming HTTP requests to the appropriate Kubernetes Services and performs load balancing across application Pods.
+
+## Application Ingress
+
+The Ingress resource routes external HTTP traffic:
+- `/` → frontend service
+- `/api` → backend service
+

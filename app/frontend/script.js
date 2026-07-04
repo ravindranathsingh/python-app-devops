@@ -38,30 +38,34 @@ async function checkHealth() {
             badge.className = "badge offline";
         }
     } catch {
-        badge.textContent = "DISCONNECTED FROM BACKEND SERVICES";
+        badge.textContent = "BACKEND UNHEALTHY";
         badge.className = "badge offline";
     }
 }
 
 async function fetchLogs() {
     const list = document.getElementById('logList');
+
     try {
         const response = await fetch(`${API_URL}/deployments`);
+
         const logs = await response.json();
-        
+
         list.innerHTML = '';
-        
-        if (!logs || logs.length === 0) {
+
+        if (!Array.isArray(logs)) {
             list.innerHTML = '<li class="empty">No entries found.</li>';
             return;
         }
-        
+
         logs.forEach(log => {
             const li = document.createElement('li');
             li.innerHTML = `[${log.timestamp}] Deployment success: <strong>${log.service}</strong> target -> <strong>${log.environment}</strong>`;
             list.appendChild(li);
         });
-    } catch {
-        list.innerHTML = '<li class="error">Error contacting DB storage services.</li>';
+
+    } catch (error) {
+        // SAME behavior as VM (silent fallback instead of error UI)
+        list.innerHTML = '<li class="empty">No entries found.</li>';
     }
 }

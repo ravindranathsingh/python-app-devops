@@ -5,7 +5,7 @@ from flask_cors import CORS
 import psycopg2
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://192.168.56.10:8000"}})
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Read infrastructure configuration directly from environment variables (DevOps Best Practice)
 DB_HOST = os.getenv("DB_HOST", "localhost")
