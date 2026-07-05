@@ -38,8 +38,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Validate secrets exist
+        run: |
+          if [ -z "${{ secrets.GHCR_USERNAME }}" ]; then echo "GHCR_USERNAME missing"; exit 1; fi
+          if [ -z "${{ secrets.GHCR_TOKEN }}" ]; then echo "GHCR_TOKEN missing"; exit 1; fi
+
       - name: Log in to GHCR
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io \
+          -u "${{ secrets.GHCR_USERNAME }}" \
+          --password-stdin
 
       - name: Build Backend Image
         run: docker build -t $IMAGE_BACKEND:${{ github.sha }} ./backend
