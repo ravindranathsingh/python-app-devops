@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata:
   name: frontend
-  namespace: {{ .Release.namespace }}
+  namespace: {{ .Release.Namespace }}
 
 labels:
   {{- include "python-app.labels" . | nindent 4 }}
