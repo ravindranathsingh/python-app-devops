@@ -212,3 +212,7 @@ Environment-specific configuration is supplied during deployment without modifyi
 ### Continuous Integration
 
 GitHub Actions performs automated validation on every change before artifacts are built and deployed through the rest of the DevOps pipeline.
+
+### Parallel CI Execution
+
+The CI pipeline is being refactored to run frontend, backend, and infrastructure checks in parallel jobs to improve speed and isolation.
