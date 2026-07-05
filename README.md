@@ -216,3 +216,20 @@ GitHub Actions performs automated validation on every change before artifacts ar
 ### Parallel CI Execution
 
 The CI pipeline is being refactored to run frontend, backend, and infrastructure checks in parallel jobs to improve speed and isolation.
+
+## ArgoCD (GitOps Deployment)
+
+ArgoCD is used to implement GitOps-based continuous delivery.
+
+- Watches Helm/Kubernetes manifests in Git
+- Automatically syncs cluster state
+- Enables declarative deployments
+- Provides UI-based deployment monitoring
+
+### ArgoCD Application
+
+The application is managed declaratively using an ArgoCD `Application` manifest. ArgoCD continuously reconciles the Kubernetes cluster with the Helm chart stored in Git.
+
+### GitOps Source
+
+ArgoCD monitors the Helm chart stored in this repository and automatically synchronizes the Kubernetes cluster with the desired state defined in Git.
