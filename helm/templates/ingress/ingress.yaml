@@ -5,9 +5,8 @@ kind: Ingress
 metadata:
   name: python-app-ingress
   namespace: {{ .Release.Namespace }}
-
-labels:
-  {{- include "python-app.labels" . | nindent 4 }}
+  labels:
+    {{- include "python-app.labels" . | nindent 4 }}
 
 spec:
   ingressClassName: nginx

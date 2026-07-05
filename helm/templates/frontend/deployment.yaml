@@ -4,9 +4,8 @@ kind: Deployment
 metadata:
   name: frontend
   namespace: {{ .Release.Namespace }}
-
-labels:
-  {{- include "python-app.labels" . | nindent 4 }}
+  labels:
+    {{- include "python-app.labels" . | nindent 4 }}
 
 spec:
   replicas: {{ .Values.frontend.replicas }}

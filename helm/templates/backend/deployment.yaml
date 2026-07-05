@@ -4,9 +4,8 @@ kind: Deployment
 metadata:
   name: backend
   namespace: {{ .Release.Namespace }}
-
-labels:
-  {{- include "python-app.labels" . | nindent 4 }}
+  labels:
+    {{- include "python-app.labels" . | nindent 4 }}
 
 spec:
   replicas: {{ .Values.backend.replicas }}
