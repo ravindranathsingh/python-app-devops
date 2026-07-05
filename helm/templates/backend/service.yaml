@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "python-app.labels" . | nindent 4 }}
+    app: backend
 
 spec:
   type: ClusterIP
@@ -14,5 +15,6 @@ spec:
     app: backend
 
   ports:
-    - port: 5000
+    - name: http
+      port: 5000
       targetPort: 5000
