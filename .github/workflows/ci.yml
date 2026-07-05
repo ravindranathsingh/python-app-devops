@@ -49,8 +49,13 @@ jobs:
           -u "${{ secrets.GHCR_USERNAME }}" \
           --password-stdin
 
+      - name: Debug workspace
+        run: ls -R
+
       - name: Build Backend Image
-        run: docker build -t $IMAGE_BACKEND:${{ github.sha }} ./backend
+        run: |
+          ls -R
+          docker build -t $IMAGE_BACKEND:${{ github.sha }} ./app/backend
 
       - name: Push Backend Image
         run: docker push $IMAGE_BACKEND:${{ github.sha }}
@@ -67,8 +72,11 @@ jobs:
       - name: Log in to GHCR
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
 
+      - name: Debug workspace
+        run: ls -R
+
       - name: Build Frontend Image
-        run: docker build -t $IMAGE_FRONTEND:${{ github.sha }} ./frontend
+        run: docker build -t $IMAGE_FRONTEND:${{ github.sha }} ./app/frontend
 
       - name: Push Frontend Image
         run: docker push $IMAGE_FRONTEND:${{ github.sha }}
