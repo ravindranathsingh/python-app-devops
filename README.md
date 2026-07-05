@@ -137,3 +137,78 @@ The Ingress resource routes external HTTP traffic:
 - `/` → frontend service
 - `/api` → backend service
 
+## Helm Packaging
+
+The manually created Kubernetes manifests are converted into reusable Helm charts.
+
+### Objectives
+
+- Replace static Kubernetes YAML manifests with Helm templates.
+- Separate configuration from templates using `values.yaml`.
+- Make deployments reusable across development, staging, and production environments.
+- Follow the Helm chart structure recommended by the official Helm documentation.
+
+### Helm Chart Structure
+
+The project uses the standard Helm chart layout recommended by Helm.
+
+The chart separates:
+
+- Chart metadata
+- Default configuration values
+- Kubernetes resource templates
+- Helper templates
+
+This separation allows the same chart to be reused across multiple environments by changing only configuration values.
+
+### Helm Chart Initialization
+
+The Helm chart was initialized using the standard `helm create` command to generate the recommended chart structure.
+
+Unused example templates were removed, and the remaining files were customized specifically for this application to create a clean, production-ready Helm chart.
+
+### Chart Metadata
+
+The Helm chart metadata is defined in `Chart.yaml`.
+
+This file identifies the chart and provides version information required for packaging and deployment.
+
+### Helm Chart Metadata
+
+The chart metadata was customized to describe the application instead of using Helm's default example values.
+
+Chart version and application version are managed independently to support controlled application and chart releases.
+
+### Helm Migration
+
+The existing Kubernetes manifests serve as the source of truth for the Helm chart.
+
+Before templating, all manifests are reviewed to identify reusable configuration, ensuring the Helm chart preserves the existing deployment behavior.
+
+### Helm Template Organization
+
+The Helm templates follow the same directory structure as the original Kubernetes manifests. This one-to-one mapping simplifies the migration from raw manifests to Helm templates while preserving readability.
+
+### Helm Chart Validation
+
+Before deployment, the Helm chart is validated locally to ensure the templates render correctly and the chart structure follows Helm standards.
+
+### Helm Validation
+
+The Helm chart was validated using `helm lint` and `helm template`.
+
+The initial installation is performed in a separate namespace to verify the chart before migrating existing resources to Helm management.
+
+### Helm Template Helpers
+
+Reusable template helpers are used to eliminate duplication and keep metadata consistent across all Kubernetes resources.
+
+### Environment Configuration
+
+The Helm chart supports multiple environments through separate values files.
+
+Environment-specific configuration is supplied during deployment without modifying the chart templates.
+
+### Continuous Integration
+
+GitHub Actions performs automated validation on every change before artifacts are built and deployed through the rest of the DevOps pipeline.

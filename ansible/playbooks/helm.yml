@@ -1,0 +1,56 @@
+---
+- name: Install Helm on Ubuntu Master Node
+  hosts: kube_control_plane
+  become: true
+  vars:
+    helm_version: "v3.15.2"
+  tasks:
+
+    - name: Remove broken and decommissioned baltocdn APT configurations
+      ansible.builtin.file:
+        path: /etc/apt/sources.list.d/helm-stable-debian.list
+        state: absent
+
+    - name: Install underlying unarchiving utilities
+      apt:
+        name:
+          - tar
+          - gzip
+          - curl
+        state: present
+        update_cache: yes
+
+    - name: Download and unpack official Helm binary archive
+      ansible.builtin.unarchive:
+        src: "https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz"
+        dest: /tmp
+        remote_src: yes
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Move extracted Helm binary file to standard system path
+      ansible.builtin.copy:
+        src: /tmp/linux-amd64/helm
+        dest: /usr/local/bin/helm
+        remote_src: yes
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Clean up temporary extraction directory artifacts
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /tmp/linux-amd64
+        - "/tmp/helm-{{ helm_version }}-linux-amd64.tar.gz"
+
+    - name: Verify fresh Helm installation version details
+      ansible.builtin.command: /usr/local/bin/helm version
+      register: helm_version_output
+      changed_when: false
+
+    - name: Display active Helm status output string
+      ansible.builtin.debug:
+        var: helm_version_output.stdout
