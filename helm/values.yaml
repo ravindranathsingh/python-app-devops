@@ -112,7 +112,7 @@ postgres:
 
 backend:
   replicas: 2
-  image: ghcr.io/ravindranathsingh/backend-app:v1
+  image: ghcr.io/ravindranathsingh/backend-app:v2
 
 frontend:
   replicas: 2
