@@ -1,0 +1,18 @@
+config:
+  clients:
+    - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+
+serviceMonitor:
+  enabled: true
+
+tolerations:
+  - operator: Exists
+
+rbac:
+  create: true
+
+daemonset:
+  enabled: true
+
+deployment:
+  enabled: false
